@@ -31,11 +31,11 @@ accretion disk.
         {% include figure.liquid path="assets/img/projects/general-relativity/schwarzschild_render_with_disk.png" title="Schwarzschild lensed accretion disk" class="img-fluid rounded z-depth-1" %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid path="assets/img/projects/general-relativity/schwarzschild_orbit_flythrough.gif" title="Camera orbit flythrough" class="img-fluid rounded z-depth-1" %}
+        {% include video.liquid path="assets/video/projects/general-relativity/schwarzschild_flythrough.webm" class="img-fluid rounded z-depth-1" autoplay=true loop=true muted=true controls=true %}
     </div>
 </div>
 <div class="caption">
-    Left: the lensed accretion disk seen from just outside the photon sphere — light from the far side of the disk bends around the black hole to appear above and below its shadow. Right: a camera flythrough orbiting the black hole.
+    Left: the lensed accretion disk seen from further back, showing the full disk wrapping around the shadow with a secondary lensed image arcing above it. Right: a swooping camera trajectory — varying both distance and viewing angle, rather than a fixed orbit — reveals how the photon ring and disk lensing change as the camera moves.
 </div>
 
 Extending the same raytracer to a spinning (Kerr) black hole adds
