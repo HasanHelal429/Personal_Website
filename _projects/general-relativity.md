@@ -44,21 +44,23 @@ as spin increases, and a disk co-rotating with the hole (prograde) can
 orbit much closer in than one orbiting against it (retrograde), since
 frame dragging moves the innermost stable orbit itself.
 
-<div class="row">
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid path="assets/img/projects/general-relativity/kerr_shadow_spin_sweep.png" title="Black hole shadow vs. spin" class="img-fluid rounded z-depth-1" %}
-    </div>
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid path="assets/img/projects/general-relativity/kerr_prograde_vs_retrograde.png" title="Prograde vs retrograde accretion disk" class="img-fluid rounded z-depth-1" %}
-    </div>
-</div>
+{% include figure.liquid path="assets/img/projects/general-relativity/kerr_hero.png" title="Kerr lensed accretion disk" class="img-fluid rounded z-depth-1" %}
 <div class="caption">
-    Left: the shadow shrinking and shifting as spin a goes from 0 to near-extremal 0.998. Right: at a=0.9, the prograde disk's inner edge (r_isco=2.32M) sits much closer to the hole than the retrograde disk's (r_isco=8.72M).
+    The lensed disk around a spinning black hole (a=0.9M) — frame dragging skews the shadow and lensed image away from the mirror symmetry of the non-spinning case above.
 </div>
 
-{% include figure.liquid path="assets/img/projects/general-relativity/schwarzschild_deflection_validation.png" title="Deflection angle validation" class="img-fluid rounded z-depth-1" zoomable=true %}
+{% include video.liquid path="assets/video/projects/general-relativity/kerr_spinsweep.webm" class="img-fluid rounded z-depth-1" autoplay=true loop=true muted=true controls=true caption="The shadow continuously shrinking and shifting as spin a sweeps from 0 to near-extremal 0.998 and back." %}
+
+<div class="row">
+    <div class="col-sm mt-3 mt-md-0">
+        {% include figure.liquid path="assets/img/projects/general-relativity/kerr_prograde.png" title="Prograde accretion disk" class="img-fluid rounded z-depth-1" %}
+    </div>
+    <div class="col-sm mt-3 mt-md-0">
+        {% include figure.liquid path="assets/img/projects/general-relativity/kerr_retrograde.png" title="Retrograde accretion disk" class="img-fluid rounded z-depth-1" %}
+    </div>
+</div>
 <div class="caption">
-    The raytraced light-bending angle validated against the analytic strong-deflection limit across impact parameters.
+    At a=0.9: the prograde disk's inner edge (r_isco=2.32M) sits much closer to the hole than the retrograde disk's (r_isco=8.72M), since frame dragging moves the innermost stable orbit itself.
 </div>
 
 ## Relativistic hydrodynamics & tidal disruption
