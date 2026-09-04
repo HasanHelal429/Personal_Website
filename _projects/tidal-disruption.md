@@ -46,8 +46,15 @@ The black hole is a fixed point mass (its own recoil is negligible at
 this mass ratio); the star is boosted onto a parabolic orbit — the
 standard assumption for a star scattered in from a large, weakly-bound
 orbit — parameterized by $\beta = r_t/r_p$, the ratio of the tidal
-radius to how close the orbit actually brings the star to the hole. At
-$\beta=3$, a deep plunge, the star stretches into the classic curved
+radius to how close the orbit actually brings the star to the hole.
+
+{% include figure.liquid path="assets/img/projects/tidal-disruption/encounter_schematic.png" title="Tidal-encounter geometry" class="img-fluid rounded z-depth-1" %}
+
+<div class="caption">
+    The parabolic infall (standard for a star scattered in from a large, weakly-bound orbit), the tidal radius r_t, and the pericenter distance r_p it actually reaches — beta is just their ratio. Bigger beta means a deeper, more destructive plunge.
+</div>
+
+At $\beta=3$, a deep plunge, the star stretches into the classic curved
 tidal debris stream within a single frame of pericenter passage, right
 on the predicted timing.
 
@@ -65,6 +72,8 @@ asymptote, which is itself expected: that exponent is a late-time limit,
 and a centrally-concentrated n=1.5 star is well known to decline slower
 than that near peak fallback, steepening only much later.
 
+{% include video.liquid path="assets/video/projects/tidal-disruption/fallback_return.webm" class="img-fluid rounded z-depth-1" autoplay=true loop=true muted=true controls=true caption="The same encounter, run 50 dynamical times longer and cropped in tight: the unbound majority of the star has receded far out of frame, but the bound ~54% falls back, swinging past the black hole again — closer than the original pericenter." %}
+
 Swapping the black hole's force law for a Paczynski-Wiita
 pseudo-potential — a cheap stand-in for genuine strong-field gravity,
 exact at the ISCO and divergent at the Schwarzschild radius — on the
@@ -72,6 +81,33 @@ identical orbit isolates exactly what stronger gravity changes: peak
 kinetic energy at pericenter rises 26%, and the leading edge of the
 star's debris swings measurably closer in before escaping back out,
 with energy conservation still under 0.15% throughout.
+
+<div class="row">
+    <div class="col-sm mt-3 mt-md-0">
+        {% include video.liquid path="assets/video/projects/tidal-disruption/newtonian_encounter.webm" class="img-fluid rounded z-depth-1" autoplay=true loop=true muted=true controls=true %}
+    </div>
+    <div class="col-sm mt-3 mt-md-0">
+        {% include video.liquid path="assets/video/projects/tidal-disruption/pw_encounter.webm" class="img-fluid rounded z-depth-1" autoplay=true loop=true muted=true controls=true %}
+    </div>
+</div>
+<div class="caption">
+    The identical star on the identical orbit, only the black hole's force law changed: Newtonian point mass (left) vs. Paczynski-Wiita (right). The Paczynski-Wiita star swings measurably closer in before it escapes back out.
+</div>
+
+## A different kind of orbit: repeated partial feeding
+
+A single deep plunge and a full circular orbit are two extremes; a
+bound, eccentric orbit sits in between. Placed on an orbit around a
+much lighter black hole ($M_\text{bh}=10\,M_\star$, $\beta=0.5$,
+eccentricity $0.6$ — chosen after a beta scan as the narrow window
+between "no measurable stripping" and "tears off over 10% of the star
+in one pass"), the star survives each periastron passage largely
+intact, shedding only a thin stream each time rather than disrupting
+outright — the 90th-percentile spread of its remaining mass barely
+moves, with roughly 0.2% of its particles pulled into an extended tail
+per passage.
+
+{% include video.liquid path="assets/video/projects/tidal-disruption/binary_feeding.webm" class="img-fluid rounded z-depth-1" autoplay=true loop=true muted=true controls=true caption="A star on a bound, eccentric orbit (beta=0.5, e=0.6) around a black hole only 10x its own mass, shown over ~4.3 orbits. Camera follows the star's own center of mass. Each periastron passage strips a little more, repeated feeding rather than one-shot disruption." %}
 
 ## Steady feeding: a runaway on a circular orbit
 
