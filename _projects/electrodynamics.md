@@ -19,7 +19,7 @@ charges. Each was ported from a Python prototype to run interactively
 on the GPU, and each ships with a validation gate against an analytic
 result.
 
-Everything here is *vector* electrodynamics — fields, forces,
+Everything here is _vector_ electrodynamics — fields, forces,
 radiation. The scalar wave-optics methods (Helmholtz, beam
 propagation, Fresnel–Kirchhoff diffraction) belong to a separate Optics
 page.
@@ -36,6 +36,7 @@ once the inter-grid transfers are transpose-compatible and the
 reflective-ghost boundary is applied on every level.
 
 {% include figure.liquid path="assets/img/projects/electrodynamics/multigrid_scaling.png" title="Multigrid scaling" class="img-fluid rounded z-depth-1" %}
+
 <div class="caption">
     The multigrid V-cycle count stays flat with grid size (128² → 1024²) while optimally-tuned SOR degrades — the payoff of the grid-independent W-cycle, and what makes a fine field grid affordable.
 </div>
@@ -160,19 +161,21 @@ The measured beaming half-angle scales as $1/\gamma$ and the total
 radiated power as $\gamma^4$:
 
 {% include figure.liquid path="assets/img/projects/electrodynamics/beaming.png" title="Relativistic beaming" class="img-fluid rounded z-depth-1" %}
+
 <div class="caption">
     Forward-lobe half-angle ∝ 1/γ (fit slope −1.05) and total radiated power ∝ γ⁴ (fit slope 4.00 to four significant figures), from the exact retarded-quantity angular distribution. The 2D field grid can't resolve the sub-cell synchrotron pulse for a direct measurement — this comes from evaluating the same Liénard–Wiechert expression at infinity.
 </div>
 
 ### Self-consistent radiative inspiral
 
-Letting the charges move under each other's *retarded* fields — a
+Letting the charges move under each other's _retarded_ fields — a
 trajectory ring buffer feeds the retarded-time solve, a relativistic
 pusher integrates the motion — makes radiative inspiral emerge from the
 dynamics. A bound pair of opposite charges loses energy to radiation
 and spirals in, exactly the way a gravitational-wave binary does.
 
 {% include figure.liquid path="assets/img/projects/electrodynamics/two_body_inspiral.png" title="Two-body inspiral" class="img-fluid rounded z-depth-1" %}
+
 <div class="caption">
     Left: the two charges spiralling together over ~3 orbits. Middle: the measured separation (black) tracks the analytic two-body dipole decay law (red dashed) — with the radiated power halved, because the pairwise retarded interaction without the Abraham–Lorentz self-force carries exactly half of a symmetric pair's radiation reaction. Right: the energy budget — kinetic + interaction PE + integrated radiated power — closes to under 1% of the total energy swing over the run.
 </div>
