@@ -165,16 +165,31 @@ ninja.data = [{
             },},{id: "news-a-simple-inline-announcement-with-markdown-emoji-sparkles-smile",
           title: 'A simple inline announcement with Markdown emoji! <img class="emoji" title=":sparkles:" alt=":sparkles:" src="https://github.githubassets.com/images/icons/emoji/unicode/2728.png" height="20" width="20"> <img class="emoji" title=":smile:" alt=":smile:" src="https://github.githubassets.com/images/icons/emoji/unicode/1f604.png" height="20" width="20">',
           description: "",
-          section: "News",},{id: "projects-electrodynamics",
-          title: 'Electrodynamics',
-          description: "Magnetostatics, full-wave Maxwell, and the fields of accelerating charges — coil fields and particle traps, radiation and scattering, and self-consistent radiative dynamics.",
+          section: "News",},{id: "projects-black-hole-raytracing",
+          title: 'Black-Hole Raytracing',
+          description: "Tracing null geodesics through Schwarzschild and Kerr spacetime to render gravitational lensing, black-hole shadows, photon rings, and lensed accretion disks.",
           section: "Projects",handler: () => {
-              window.location.href = "/Personal_Website/projects/electrodynamics/";
-            },},{id: "projects-general-relativity",
-          title: 'General Relativity',
-          description: "Raytracing through curved spacetime and relativistic hydrodynamics — light bending, black hole shadows, accretion, and tidal disruption.",
+              window.location.href = "/Personal_Website/projects/black-hole-raytracing/";
+            },},{id: "projects-computational-electromagnetics",
+          title: 'Computational Electromagnetics',
+          description: "A 2D finite-difference time-domain (FDTD) solver for the full Maxwell curl equations — CPML absorbing boundaries, a plane-wave source, materials, and near-to-far-field transforms validated against Mie scattering and the Fresnel equations.",
           section: "Projects",handler: () => {
-              window.location.href = "/Personal_Website/projects/general-relativity/";
+              window.location.href = "/Personal_Website/projects/computational-electromagnetics/";
+            },},{id: "projects-magnetostatics",
+          title: 'Magnetostatics',
+          description: "The magnetic field of current-carrying coils by geometric multigrid and GPU Biot–Savart, plus a relativistic Boris pusher for charged-particle motion — cyclotron orbits, drifts, and a magnetic-mirror trap.",
+          section: "Projects",handler: () => {
+              window.location.href = "/Personal_Website/projects/magnetostatics/";
+            },},{id: "projects-radiation-from-moving-charges",
+          title: 'Radiation from Moving Charges',
+          description: "The exact Liénard–Wiechert fields of accelerating point charges on the GPU — dipole radiation, array factors, relativistic beaming, and a self-consistent radiative inspiral where charges move under each other's retarded fields.",
+          section: "Projects",handler: () => {
+              window.location.href = "/Personal_Website/projects/radiation-moving-charges/";
+            },},{id: "projects-relativistic-hydrodynamics",
+          title: 'Relativistic Hydrodynamics',
+          description: "Evolving fluid on a fixed black-hole background with a shock-capturing GRHD solver — accretion tori, tidal disruption of stars, and a runaway circular-orbit feeding instability.",
+          section: "Projects",handler: () => {
+              window.location.href = "/Personal_Website/projects/relativistic-hydrodynamics/";
             },},{
         id: 'social-cv',
         title: 'CV',
