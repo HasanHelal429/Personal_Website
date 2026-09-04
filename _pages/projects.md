@@ -5,7 +5,7 @@ permalink: /projects/
 description: Computational physics projects, organized by field.
 nav: true
 nav_order: 3
-display_categories: ["General Relativity"]
+display_categories: ["General Relativity", "Electrodynamics"]
 horizontal: false
 ---
 
