@@ -2,7 +2,7 @@
 layout: page
 title: Tidal Disruption of a Star
 description: A self-gravitating SPH star, built from a Lane-Emden polytrope and validated to equilibrium, torn apart on a close encounter with a black hole — plus the slower, stranger runaway that happens when it orbits instead of plunging.
-img: assets/video/projects/tidal-disruption/tidal_disruption_beta3.webm
+img: assets/img/projects/tidal-disruption/tidal_disruption_beta3_thumb.png
 importance: 3
 category: General Relativity
 related_publications: false
