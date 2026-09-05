@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Radiation from Moving Charges
-description: The exact Liénard–Wiechert fields of accelerating point charges on the GPU — dipole radiation, array factors, relativistic beaming, and a self-consistent radiative inspiral where charges move under each other's retarded fields.
+description: The exact Liénard–Wiechert fields of accelerating point charges on the GPU — dipole radiation, array factors, relativistic beaming, a scattering encounter, and a self-consistent radiative inspiral where charges move under each other's retarded fields.
 img: assets/img/projects/radiation-moving-charges/synchrotron.png
 importance: 3
 category: Electrodynamics
@@ -31,10 +31,25 @@ $$
 \right],\quad \kappa = 1 - \mathbf{n}\cdot\boldsymbol\beta.
 $$
 
-For a charge oscillating along a line this gives the dipole radiation
-doughnut; a charge on a circular orbit at $\gamma = 5$ throws its
-radiation into a forward searchlight that sweeps around with it — the
-synchrotron beam, compressed into a half-angle $\sim 1/\gamma$.
+A charge with no acceleration ($\dot{\boldsymbol\beta}=0$) is the
+simplest non-trivial case: only the velocity term survives, and even
+though nothing is radiating, the field itself isn't the ordinary
+isotropic Coulomb field once the charge is moving fast. It's squashed
+into a transverse pancake — stronger in the plane perpendicular to the
+motion, weaker fore and aft — the field-line manifestation of
+relativistic length contraction.
+
+{% include figure.liquid path="assets/img/projects/radiation-moving-charges/uniform_motion.png" title="Field of a uniformly moving charge" class="img-fluid rounded z-depth-1" %}
+
+<div class="caption">
+    A charge moving at constant velocity (beta=0.9, gamma~2.29, no acceleration so no radiation). The field concentrates in the plane transverse to the motion instead of spreading isotropically — validated against the closed-form solution to 5e-16.
+</div>
+
+Give the same charge an acceleration and it radiates. For a charge
+oscillating along a line this gives the dipole radiation doughnut; a
+charge on a circular orbit at $\gamma = 5$ throws its radiation into a
+forward searchlight that sweeps around with it — the synchrotron beam,
+compressed into a half-angle $\sim 1/\gamma$.
 
 <div class="row">
     <div class="col-sm mt-3 mt-md-0">
@@ -59,21 +74,30 @@ with the side lobes set by the element spacing.
         {% include video.liquid path="assets/video/projects/radiation-moving-charges/dipole_array.webm" class="img-fluid rounded z-depth-1" autoplay=true loop=true muted=true controls=true %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid path="assets/img/projects/radiation-moving-charges/dipole_array_pattern.png" title="Array factor" class="img-fluid rounded z-depth-1" %}
+        {% include figure.liquid path="assets/img/projects/radiation-moving-charges/dipole_array_pattern.png" title="Far-field array pattern" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 <div class="caption">
-    Left: two in-phase oscillators a half-wavelength apart, their wavefronts interfering. Right: the radiation pattern measured a couple of wavelengths out (blue) against the analytic element-pattern × array-factor prediction (green).
+    Left: two in-phase oscillators a half-wavelength apart, their wavefronts interfering. Right: the same array's far field, further out — a single broadside lobe bulging out between the two elements, matching the analytic element-pattern × array-factor prediction.
 </div>
 
-The measured beaming half-angle scales as $1/\gamma$ and the total
-radiated power as $\gamma^4$:
+The measured beaming half-angle scales as $1/\gamma$ (fit slope
+$-1.05$) and the total radiated power as $\gamma^4$ (fit slope $4.00$
+to four significant figures) — from the exact retarded-quantity angular
+distribution, evaluated at infinity since the 2D field grid can't
+resolve the sub-cell synchrotron pulse directly.
 
-{% include figure.liquid path="assets/img/projects/radiation-moving-charges/beaming.png" title="Relativistic beaming" class="img-fluid rounded z-depth-1" %}
+## A more complex source: the figure-8 radiator
 
-<div class="caption">
-    Forward-lobe half-angle ∝ 1/γ (fit slope −1.05) and total radiated power ∝ γ⁴ (fit slope 4.00 to four significant figures), from the exact retarded-quantity angular distribution. The 2D field grid can't resolve the sub-cell synchrotron pulse for a direct measurement — this comes from evaluating the same Liénard–Wiechert expression at infinity.
-</div>
+Every source so far moves at a single frequency. A charge on a
+figure-8 (Lissajous) path — oscillating across the pattern at $\omega$
+and along it at $2\omega$ — radiates a superposition of both instead of
+one pure tone. Seen close in it still just looks like a spiral; wide
+enough out to hold several wavelengths in frame, the two frequencies'
+slightly different pitch is there in the field, even if it takes a
+careful look to see it over the dominant fundamental:
+
+{% include video.liquid path="assets/video/projects/radiation-moving-charges/figure8.webm" class="img-fluid rounded z-depth-1" autoplay=true loop=true muted=true controls=true caption="A charge on a Lissajous figure-8 path, radiating both its fundamental and first-harmonic frequency at once instead of the single tone every other source on this page emits." %}
 
 ## Self-consistent radiative inspiral
 
@@ -81,17 +105,17 @@ Letting the charges move under each other's _retarded_ fields — a
 trajectory ring buffer feeds the retarded-time solve, a relativistic
 pusher integrates the motion — makes radiative inspiral emerge from the
 dynamics. A bound pair of opposite charges loses energy to radiation and
-spirals in, exactly the way a gravitational-wave binary does.
-
-{% include figure.liquid path="assets/img/projects/radiation-moving-charges/two_body_inspiral.png" title="Two-body inspiral" class="img-fluid rounded z-depth-1" %}
-
-<div class="caption">
-    Left: the two charges spiralling together over ~3 orbits. Middle: the measured separation (black) tracks the analytic two-body dipole decay law (red dashed) — with the radiated power halved, because the pairwise retarded interaction without the Abraham–Lorentz self-force carries exactly half of a symmetric pair's radiation reaction. Right: the energy budget — kinetic + interaction PE + integrated radiated power — closes to under 1% of the total energy swing over the run.
-</div>
-
-A companion parameter study sweeps the initial separation and recovers
-the $-\dot E \propto d^{-4}$ scaling to a fit slope of $-3.96$, with the
-half-power factor holding constant across the sweep.
+spirals in, exactly the way a gravitational-wave binary does. The
+measured separation tracks the analytic two-body dipole decay law, with
+the radiated power exactly half what a symmetric pair's full
+self-consistent radiation reaction would give — the pairwise retarded
+interaction here has no Abraham–Lorentz self-force term, so it only
+ever carries half the story. The energy budget (kinetic + interaction
+potential + integrated radiated power) closes to under 1% of the total
+energy swing over the run, and a companion parameter sweep over the
+initial separation recovers the $-\dot{E} \propto d^{-4}$ scaling to a
+fit slope of $-3.96$, with the half-power factor holding constant
+across the sweep.
 
 The same run as an interactive figure — the trajectories on the left,
 the energy budget on the right, scrub or play through the inspiral:
@@ -111,6 +135,17 @@ document.addEventListener("readystatechange", () => {
   }
 });
 </script>
+
+## A scattering encounter: Coulomb bremsstrahlung
+
+A bound orbit isn't the only thing the self-consistent solver can do.
+Send a light charge past a fixed heavy one on a straight-line approach
+instead of a closed orbit, and it deflects — a scattering encounter
+rather than an inspiral, radiating a burst as it goes rather than a
+steady drain. Sweeping the impact parameter and measuring the radiated
+energy recovers the classic $b^{-3}$ bremsstrahlung scaling.
+
+{% include video.liquid path="assets/video/projects/radiation-moving-charges/coulomb_bremsstrahlung.webm" class="img-fluid rounded z-depth-1" autoplay=true loop=true muted=true controls=true caption="A light charge (right) deflects past a fixed heavy charge (left) instead of orbiting it — the same self-consistent solver as the inspiral above, in its unbound regime. The deflection itself is the clearest thing to watch; the radiated burst it leaves behind is real but faint at this scale." %}
 
 ## Code
 
