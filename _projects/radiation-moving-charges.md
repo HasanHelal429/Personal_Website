@@ -39,11 +39,7 @@ into a transverse pancake — stronger in the plane perpendicular to the
 motion, weaker fore and aft — the field-line manifestation of
 relativistic length contraction.
 
-{% include figure.liquid path="assets/img/projects/radiation-moving-charges/uniform_motion.png" title="Field of a uniformly moving charge" class="img-fluid rounded z-depth-1" %}
-
-<div class="caption">
-    A charge moving at constant velocity (beta=0.9, gamma~2.29, no acceleration so no radiation). The field concentrates in the plane transverse to the motion instead of spreading isotropically — validated against the closed-form solution to 5e-16.
-</div>
+{% include video.liquid path="assets/video/projects/radiation-moving-charges/uniform_motion.webm" class="img-fluid rounded z-depth-1" autoplay=true loop=true muted=true controls=true caption="A charge moving at constant velocity (beta=0.9, gamma~2.29, no acceleration so no radiation) — the dot marks the charge itself, with its trail behind it. The field concentrates in the plane transverse to the motion instead of spreading isotropically, and translates rigidly with the charge — validated against the closed-form solution to 5e-16." %}
 
 Give the same charge an acceleration and it radiates. For a charge
 oscillating along a line this gives the dipole radiation doughnut; a
@@ -78,7 +74,7 @@ with the side lobes set by the element spacing.
     </div>
 </div>
 <div class="caption">
-    Left: two in-phase oscillators a half-wavelength apart, their wavefronts interfering. Right: the same array's far field, further out — a single broadside lobe bulging out between the two elements, matching the analytic element-pattern × array-factor prediction.
+    Left: two in-phase oscillators a half-wavelength apart, their wavefronts interfering (the dots mark the charges, their short trails the oscillation range). Right: the array's actual far-field pattern — |E| sampled on a circle several wavelengths out and time-averaged to drop the fill-in transient, the same measurement docs/SIMULATION.md validates against the analytic element-pattern × array-factor prediction. The four-lobed clover shape is that product: the single-element doughnut split into quarters by this spacing's array factor.
 </div>
 
 The measured beaming half-angle scales as $1/\gamma$ (fit slope
@@ -97,7 +93,7 @@ enough out to hold several wavelengths in frame, the two frequencies'
 slightly different pitch is there in the field, even if it takes a
 careful look to see it over the dominant fundamental:
 
-{% include video.liquid path="assets/video/projects/radiation-moving-charges/figure8.webm" class="img-fluid rounded z-depth-1" autoplay=true loop=true muted=true controls=true caption="A charge on a Lissajous figure-8 path, radiating both its fundamental and first-harmonic frequency at once instead of the single tone every other source on this page emits." %}
+{% include video.liquid path="assets/video/projects/radiation-moving-charges/figure8.webm" class="img-fluid rounded z-depth-1" autoplay=true loop=true muted=true controls=true caption="A charge on a Lissajous figure-8 path, radiating both its fundamental and first-harmonic frequency at once instead of the single tone every other source on this page emits. The trail traces the actual figure-8 the charge is following." %}
 
 ## Self-consistent radiative inspiral
 
@@ -116,6 +112,8 @@ energy swing over the run, and a companion parameter sweep over the
 initial separation recovers the $-\dot{E} \propto d^{-4}$ scaling to a
 fit slope of $-3.96$, with the half-power factor holding constant
 across the sweep.
+
+{% include video.liquid path="assets/video/projects/radiation-moving-charges/two_body_inspiral.webm" class="img-fluid rounded z-depth-1" autoplay=true loop=true muted=true controls=true caption="The two charges (orange +q, blue -q) spiralling together over ~3 orbits, each with its full trajectory traced behind it — the slow inward drift of the ring is the radiative decay itself." %}
 
 The same run as an interactive figure — the trajectories on the left,
 the energy budget on the right, scrub or play through the inspiral:
@@ -145,7 +143,7 @@ rather than an inspiral, radiating a burst as it goes rather than a
 steady drain. Sweeping the impact parameter and measuring the radiated
 energy recovers the classic $b^{-3}$ bremsstrahlung scaling.
 
-{% include video.liquid path="assets/video/projects/radiation-moving-charges/coulomb_bremsstrahlung.webm" class="img-fluid rounded z-depth-1" autoplay=true loop=true muted=true controls=true caption="A light charge (right) deflects past a fixed heavy charge (left) instead of orbiting it — the same self-consistent solver as the inspiral above, in its unbound regime. The deflection itself is the clearest thing to watch; the radiated burst it leaves behind is real but faint at this scale." %}
+{% include video.liquid path="assets/video/projects/radiation-moving-charges/coulomb_bremsstrahlung.webm" class="img-fluid rounded z-depth-1" autoplay=true loop=true muted=true controls=true caption="A light charge (right) deflects past a fixed heavy charge (left) instead of orbiting it — the same self-consistent solver as the inspiral above, in its unbound regime. The trail traces the actual scattering curve, bending visibly at closest approach; the radiated burst it leaves behind is real but faint at this scale." %}
 
 ## Code
 
