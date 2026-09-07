@@ -1,0 +1,174 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title> Wavepacket Dynamics | Hasan Helal </title> <meta name="author" content="Hasan Helal"> <meta name="description" content="The time-dependent Schrödinger equation by split-step Fourier — one dimension-generic solver watching wavefunctions actually move: a packet tunnelling through a barrier it shouldn't clear, interference building at a double slit, a bound electron sloshing in 3D, and how you run an open scattering problem on a finite grid."> <meta name="keywords" content="jekyll, jekyll-theme, academic-website, portfolio-website, UCLA, Physics, Computational Methods"> <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:; font-src 'self' data: https:; media-src 'self' https:; frame-src 'self' https:; connect-src 'self' https:;"> <style>
+  :root {
+    --max-content-width: 930px;
+  }
+</style> <link rel="stylesheet" href="/Personal_Website/assets/css/tailwind.css?v=50c64c15cbb9fd1ce6056fdb8bcb4b62"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.2.0/css/all.min.css" integrity="sha256-MVopmdyC2tYTiJ8wlktf0uh0v4NgT+vNdyVFepi7Q0c=" crossorigin="anonymous"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.5/css/academicons.min.css" integrity="sha256-SzrCOBJbGVFMahewkgjwnApaV2+av1DwMAA+/QGLyZw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/scholar-icons@1.0.3/css/scholar-icons.css" integrity="sha256-VY3hHVj/hNX3fYG6wtbA6TcKJQl7+FthzGSyIB64klY=" crossorigin="anonymous"> <link defer rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&amp;display=swap"> <link defer rel="stylesheet" href="/Personal_Website/assets/css/jekyll-pygments-themes-github.css?v=591dab5a4e56573bf4ef7fd332894c99" media="" id="highlight_theme_light"> <link rel="shortcut icon" href="data:image/svg+xml,&lt;svg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20100%20100%22&gt;&lt;text%20y=%22.9em%22%20font-size=%2290%22&gt;%E2%9A%9B%EF%B8%8F&lt;/text&gt;&lt;/svg&gt;"> <link rel="stylesheet" href="/Personal_Website/assets/css/main.css?v=3116ba77db9ee1581d05bb3e86fbf7f1"> <link rel="canonical" href="https://hasanhelal429.github.io/Personal_Website/projects/wavepacket-dynamics/"> <script src="/Personal_Website/assets/js/theme.js?v=5286c3e4c334d0ecb8fc0c40ff4fa7ec"></script> <link defer rel="stylesheet" href="/Personal_Website/assets/css/jekyll-pygments-themes-native.css?v=5847e5ed4a4568527aa6cfab446049ca" media="none" id="highlight_theme_dark"> <script>
+    initTheme();
+  </script> </head> <body class="fixed-top-nav "> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/Personal_Website/"> <span class="font-weight-bold">Hasan</span> Helal </a> <button class="navbar-toggler collapsed navbar-toggler-main" type="button" data-nav-toggle="navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse navbar-collapse-main" id="navbarNav"> <ul class="navbar-nav navbar-menu-list flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/Personal_Website/">about </a> </li> <li class="nav-item active"> <a class="nav-link" href="/Personal_Website/projects/">projects <span class="sr-only">(current)</span> </a> </li> <li class="nav-item "> <a class="nav-link" href="/Personal_Website/repositories/">repositories </a> </li> <li class="nav-item "> <a class="nav-link" href="/Personal_Website/cv/">CV </a> </li> <li class="nav-item dropdown "> <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-nav-dropdown-toggle="true" aria-haspopup="true" aria-expanded="false">submenus </a> <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown"> <a class="dropdown-item " href="/Personal_Website/books/">bookshelf</a> </div> </li> <li class="nav-item"> <button id="search-toggle" type="button" title="Search" aria-label="Open search"> <span class="nav-link">ctrl k <i class="fa-solid fa-magnifying-glass"></i></span> </button> </li> <li class="toggle-container"> <button id="light-toggle" type="button" title="Change theme" aria-label="Change color theme"> <i class="fa-half-sun-moon" id="light-toggle-system"></i> <i class="fa-solid fa-moon" id="light-toggle-dark"></i> <i class="fa-solid fa-sun" id="light-toggle-light"></i> </button> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="container mt-5" role="main"> <div class="post"> <header class="post-header"> <h1 class="post-title">Wavepacket Dynamics</h1> <p class="post-description">The time-dependent Schrödinger equation by split-step Fourier — one dimension-generic solver watching wavefunctions actually move: a packet tunnelling through a barrier it shouldn't clear, interference building at a double slit, a bound electron sloshing in 3D, and how you run an open scattering problem on a finite grid.</p> </header> <article> <p>The <a href="/Personal_Website/projects/stationary-states/">stationary states</a> tell you the notes; this is the music. Give a wavefunction some initial shape and momentum and integrate</p> \[i\,\frac{\partial \psi}{\partial t} = \Big(-\tfrac12 \nabla^2 + V(\mathbf r)\Big)\psi\] <p>forward in time. The method here is the <strong>split-step Fourier</strong> (Strang) scheme — and its whole appeal is that one short piece of code does 1D, 2D and 3D, and both open and hard-walled boundaries, without changing.</p> <h2 id="one-step">One step</h2> <p>Split the evolution operator over a small time step into a potential part and a kinetic part:</p> <figure> <picture> <source class="responsive-img-srcset" srcset="/Personal_Website/assets/img/projects/wavepacket-dynamics/split_step_cycle-480.webp 480w,/Personal_Website/assets/img/projects/wavepacket-dynamics/split_step_cycle-800.webp 800w,/Personal_Website/assets/img/projects/wavepacket-dynamics/split_step_cycle-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/Personal_Website/assets/img/projects/wavepacket-dynamics/split_step_cycle.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="One split-step" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> <div class="caption"> The potential is diagonal in real space, so a half-step is an elementwise phase. The kinetic term −½∇² is diagonal in <em>momentum</em> space, so a full step is: Fourier transform, multiply by e<sup>−ik²Δt/2</sup>, transform back. Sandwich them symmetrically and the error per step is O(Δt³), and every step is exactly norm-conserving. </div> <p>Against the cases with known answers it behaves: a free Gaussian wavepacket spreads exactly as $\sigma(t) = \sigma_0\sqrt{1 + (t/2\sigma_0^2)^2}$, halving $\Delta t$ cuts the error by four (second order), and a stationary eigenstate propagated through the solver comes out changed by nothing but the phase $e^{-iEt}$ — the tightest possible check that the kinetic and potential steps are consistent.</p> <h2 id="tunnelling-through-a-barrier">Tunnelling through a barrier</h2> <p>Send a wavepacket at a rectangular barrier taller than the packet’s mean energy. Classically nothing gets through. Quantum-mechanically a piece does — it splits, part reflecting, part emerging on the far side.</p> <figure> <video src="/Personal_Website/assets/video/projects/wavepacket-dynamics/tunneling_1d.webm" class="img-fluid rounded z-depth-1" width="auto" height="auto" autoplay="" controls="" loop="" muted=""></video> <figcaption class="caption">A Gaussian packet (E ≈ 1.8) hitting a barrier of height 2.4. The incident and reflected parts interfere into ripples on the left; a smaller transmitted packet appears on the right and moves off. An absorbing layer at each edge stops either piece from wrapping back.</figcaption> </figure> <p>Sweeping the incident energy and measuring the transmitted fraction traces out the tunnelling curve. It sits just below the textbook plane-wave result, by a growing amount at higher energy — a real, expected systematic: a wavepacket carries a <em>spread</em> of energies, and near a sharp feature in $T(E)$ the low-energy tail drags the average down.</p> <div id="wd-transmission" style="width:100%;height:430px;"></div> <script>
+document.addEventListener("readystatechange", () => {
+  if (document.readyState === "complete" && !window.__wdTransLoaded) {
+    window.__wdTransLoaded = true;
+    fetch("/Personal_Website/assets/json/projects/wavepacket-dynamics/transmission_vs_energy.json")
+      .then((r) => r.json())
+      .then((fig) => Plotly.newPlot("wd-transmission", fig.data, fig.layout, { responsive: true }));
+  }
+});
+</script> <div class="caption"> Transmission probability versus incident energy: the wavepacket measurement (points) against the exact plane-wave formula (line). They agree to a mean of 0.015 across the sweep, with the wavepacket running low at high energy for the reason above. </div> <h2 id="the-double-slit">The double slit</h2> <p>The same solver in two dimensions, aimed at a wall with two gaps in it. A single incoming wavepacket goes through <em>both</em> slits and interferes with itself on the far side.</p> <figure> <video src="/Personal_Website/assets/video/projects/wavepacket-dynamics/double_slit_2d.webm" class="img-fluid rounded z-depth-1" width="auto" height="auto" autoplay="" controls="" loop="" muted=""></video> <figcaption class="caption">A wavepacket passing through two slits (wall at the left edge of the frame). The transmitted wave fans out into lobes separated by dark nulls — the two-slit interference pattern, forming in real time.</figcaption> </figure> <p>Left running and time-averaged, the far side builds up the full fringe pattern. The measured spacing of the central fringes matches the elementary formula $\Delta y \approx \lambda L / d$ — with $\lambda = 2\pi/k_0$ the packet’s central de Broglie wavelength — to about 0.3% near the axis, drifting off further out as the small-angle approximation in that formula breaks down.</p> <figure> <picture> <source class="responsive-img-srcset" srcset="/Personal_Website/assets/img/projects/wavepacket-dynamics/double_slit_pattern-480.webp 480w,/Personal_Website/assets/img/projects/wavepacket-dynamics/double_slit_pattern-800.webp 800w,/Personal_Website/assets/img/projects/wavepacket-dynamics/double_slit_pattern-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/Personal_Website/assets/img/projects/wavepacket-dynamics/double_slit_pattern.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Two-slit interference pattern" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> <div class="caption"> The time-integrated intensity past the slits. Bright radial lobes with dark fringes between them — the interference pattern the electron double-slit experiment actually measures, here from integrating one wavepacket through the same split-step solver. </div> <h2 id="a-bound-electron-in-three-dimensions">A bound electron in three dimensions</h2> <p>Nothing about the method changes going to 3D. Put a wavepacket slightly off-centre in a soft Coulomb well and it orbits — a dipole oscillation of the probability cloud.</p> <figure> <video src="/Personal_Website/assets/video/projects/wavepacket-dynamics/bound_electron_3d.webm" class="img-fluid rounded z-depth-1" width="auto" height="auto" autoplay="" controls="" loop="" muted=""></video> <figcaption class="caption">A z = 0 slice through a wavepacket launched off-centre in a 3D soft-Coulomb well. The whole cloud swings back and forth through the nucleus.</figcaption> </figure> <p>There is no simple closed-form trajectory to check this against, so the test is energy conservation: the Hamiltonian has no explicit time dependence, so $\langle H\rangle$ must be constant — and it is, to a few parts in $10^7$ over the run. The oscillation period independently matches what the finite-difference eigensolver predicts from the gap between the two lowest states, to about 1%.</p> <h2 id="running-an-open-problem-on-a-closed-grid">Running an open problem on a closed grid</h2> <p>The Fourier transform in the kinetic step assumes the domain is periodic — so a packet heading off one edge reappears at the other, contaminating everything. Scattering problems (the two above) need that suppressed. The fix is a <strong>complex absorbing potential</strong>: a smooth imaginary term switched on in a layer near each edge, so <code class="language-plaintext highlighter-rouge">exp(−iVΔt)</code> picks up a real decay factor there and outgoing flux is quietly removed.</p> <figure> <video src="/Personal_Website/assets/video/projects/wavepacket-dynamics/cap_absorption.webm" class="img-fluid rounded z-depth-1" width="auto" height="auto" autoplay="" controls="" loop="" muted=""></video> <figcaption class="caption">The same packet with and without an absorbing layer. Without it (top) the packet wraps around and comes back. With it (bottom) the outgoing flux is absorbed at the edge — the norm that disappears is exactly the probability that left the box.</figcaption> </figure> <p>Tuned reasonably (a smooth ramp a few packet-widths wide), the layer reflects less than one part in $10^8$ back into the interior, and with it switched off the propagator conserves norm to machine precision — so any norm loss is attributable to the layer, not to the method.</p> <h2 id="code">Code</h2> <ul> <li> <a href="https://github.com/HasanHelal429/Physics-Simulations" rel="external nofollow noopener" target="_blank"><code class="language-plaintext highlighter-rouge">Physics-Simulations</code></a> — <code class="language-plaintext highlighter-rouge">TDSE_Solver</code>: the dimension-generic split-step propagator, the FFT/DST kinetic step, the potentials and absorbing layer, and the finite-difference eigensolver used as an independent check. Validated across seven phases (46/46 checks) against free-particle spreading, the analytic tunnelling curve, the double-slit formula, and energy conservation in 3D.</li> </ul> </article> </div> </div> <footer class="fixed-bottom" role="contentinfo"> <div class="container mt-0"> © Copyright 2026 Hasan Helal. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. </div> </footer> <script>
+  window.alFolio = {
+    compatBootstrap: false
+  };
+</script> <script src="/Personal_Website/assets/js/nav-toggle.js?v=141bd79a73ebc0f0b6ea58e440ae79fc"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script> <script defer src="/Personal_Website/assets/js/masonry.js?v=e49affc7bd2646f6acdad1dbe02c2359" type="text/javascript"></script> <script defer src="https://cdn.jsdelivr.net/npm/plotly.js@3.0.1/dist/plotly.min.js" integrity="sha256-oy6Be7Eh6eiQFs5M7oXuPxxm9qbJXEtTpfSI93dW16Q=" crossorigin="anonymous"></script> <script defer src="/Personal_Website/assets/al_charts/js/plotly-setup.js" type="text/javascript"></script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script> <script src="/Personal_Website/assets/al_math/js/mathjax-setup.js"></script> <script src="/Personal_Website/assets/js/tooltips-setup.js?v=fe487e99db6c43751e6e7bdb2d6a0611"></script> <script src="/Personal_Website/assets/js/no_defer.js?v=53b1b1a645525975c963ce8bf8bfefcf"></script> <script defer src="/Personal_Website/assets/js/common.js?v=87baac90f765f2f3362dcf6aaf312a8a"></script> <script defer src="/Personal_Website/assets/js/copy_code.js?v=c8a01c11a92744d44b093fc3bda915df" type="text/javascript"></script> <script defer src="/Personal_Website/assets/js/jupyter_new_tab.js?v=896d254890d9b47f0281f63bfccf0dee"></script> <script async src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script> <script async src="https://badge.dimensions.ai/badge.js"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/Personal_Website/assets/al_img_tools/js/zoom.js"></script> <script defer src="/Personal_Website/assets/js/progress-bar.js?v=499464c5c63ced6cf7ad62509f1e2610" type="text/javascript"></script> <script src="https://cdn.jsdelivr.net/npm/vanilla-back-to-top@7.2.1/dist/vanilla-back-to-top.min.js" integrity="sha256-uMJJ3EoTyfRBoTbR+lrfu1uRQ87RZG8AR3cVNuQVeFg=" crossorigin="anonymous"></script> <script>
+    addBackToTop();
+  </script> <script type="module" src="/Personal_Website/assets/al_search/js/search/ninja-keys.min.js"></script> <ninja-keys hidebreadcrumbs noautoloadmdicons placeholder="Type to start searching"></ninja-keys> <script src="/Personal_Website/assets/al_search/js/search-setup.js"></script> <script>
+// get the ninja-keys element
+const ninja = document.querySelector('ninja-keys');
+
+// add the home and posts menu items
+ninja.data = [{
+    id: "nav-about",
+    title: "about",
+    section: "Navigation",
+    handler: () => {
+      window.location.href = "/Personal_Website/";
+    },
+  },{id: "nav-projects",
+          title: "projects",
+          description: "Computational physics projects, organized by field.",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/Personal_Website/projects/";
+          },
+        },{id: "nav-repositories",
+          title: "repositories",
+          description: "My GitHub profile and a selection of my repositories.",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/Personal_Website/repositories/";
+          },
+        },{id: "nav-cv",
+          title: "CV",
+          description: "My CV — education, research experience, and projects. Click the icon above to download the PDF.",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/Personal_Website/cv/";
+          },
+        },{id: "dropdown-bookshelf",
+              title: "bookshelf",
+              description: "",
+              section: "Dropdown",
+              handler: () => {
+                window.location.href = "/Personal_Website/books/";
+              },
+            },{id: "books-the-godfather",
+          title: 'The Godfather',
+          description: "",
+          section: "Books",handler: () => {
+              window.location.href = "/Personal_Website/books/the_godfather/";
+            },},{id: "news-a-simple-inline-announcement",
+          title: 'A simple inline announcement.',
+          description: "",
+          section: "News",},{id: "news-a-long-announcement-with-details",
+          title: 'A long announcement with details',
+          description: "",
+          section: "News",handler: () => {
+              window.location.href = "/Personal_Website/news/announcement_2/";
+            },},{id: "news-a-simple-inline-announcement-with-markdown-emoji-sparkles-smile",
+          title: 'A simple inline announcement with Markdown emoji! <img class="emoji" title=":sparkles:" alt=":sparkles:" src="https://github.githubassets.com/images/icons/emoji/unicode/2728.png" height="20" width="20"> <img class="emoji" title=":smile:" alt=":smile:" src="https://github.githubassets.com/images/icons/emoji/unicode/1f604.png" height="20" width="20">',
+          description: "",
+          section: "News",},{id: "projects-black-hole-raytracing",
+          title: 'Black-Hole Raytracing',
+          description: "Integrating null geodesics backwards from every pixel — gravitational lensing, black-hole shadows, lensed accretion disks, and the deformed shadow and gyroscope precession of a spinning black hole.",
+          section: "Projects",handler: () => {
+              window.location.href = "/Personal_Website/projects/black-hole-raytracing/";
+            },},{id: "projects-computational-electromagnetics",
+          title: 'Computational Electromagnetics',
+          description: "A 2D finite-difference time-domain (FDTD) solver for the full Maxwell curl equations — CPML absorbing boundaries, a plane-wave source, materials, and near-to-far-field transforms validated against Mie scattering and the Fresnel equations, then pushed into interference, diffraction, and a guided mode.",
+          section: "Projects",handler: () => {
+              window.location.href = "/Personal_Website/projects/computational-electromagnetics/";
+            },},{id: "projects-magnetostatics",
+          title: 'Magnetostatics',
+          description: "The magnetic field of currents and coils, solved two independent ways and checked against theory, then fed into a relativistic Boris pusher — cyclotron orbits, a magnetic mirror and its loss cone, a magnetic cusp, and a toroidal (tokamak-style) coil ring.",
+          section: "Projects",handler: () => {
+              window.location.href = "/Personal_Website/projects/magnetostatics/";
+            },},{id: "projects-radiation-from-moving-charges",
+          title: 'Radiation from Moving Charges',
+          description: "The exact Liénard–Wiechert fields of accelerating point charges on the GPU — dipole radiation, array factors, relativistic beaming, a scattering encounter, and a self-consistent radiative inspiral where charges move under each other's retarded fields.",
+          section: "Projects",handler: () => {
+              window.location.href = "/Personal_Website/projects/radiation-moving-charges/";
+            },},{id: "projects-relativistic-hydrodynamics",
+          title: 'Relativistic Hydrodynamics',
+          description: "A GPU conservative finite-volume solver for relativistic fluid on a fixed black-hole background — validated on flat spacetime, then Schwarzschild accretion, then Kerr orbits and accretion tori, with the near-horizon instability still open.",
+          section: "Projects",handler: () => {
+              window.location.href = "/Personal_Website/projects/relativistic-hydrodynamics/";
+            },},{id: "projects-stationary-states-of-the-schrödinger-equation",
+          title: 'Stationary States of the Schrödinger Equation',
+          description: "How quantum mechanics actually starts — solving the time-independent Schrödinger equation for the energy eigenstates. The three problems with exact answers, then everything else by putting the Hamiltonian on a grid and diagonalizing — superpositions and revivals, tunnelling splittings, quasi-bound decay, and how a spectrum shifts in a field.",
+          section: "Projects",handler: () => {
+              window.location.href = "/Personal_Website/projects/stationary-states/";
+            },},{id: "projects-tidal-disruption-of-a-star",
+          title: 'Tidal Disruption of a Star',
+          description: "A self-gravitating SPH star, built from a Lane-Emden polytrope and validated to equilibrium, torn apart on a close encounter with a black hole — plus the slower, stranger runaway that happens when it orbits instead of plunging.",
+          section: "Projects",handler: () => {
+              window.location.href = "/Personal_Website/projects/tidal-disruption/";
+            },},{id: "projects-wavepacket-dynamics",
+          title: 'Wavepacket Dynamics',
+          description: "The time-dependent Schrödinger equation by split-step Fourier — one dimension-generic solver watching wavefunctions actually move: a packet tunnelling through a barrier it shouldn't clear, interference building at a double slit, a bound electron sloshing in 3D, and how you run an open scattering problem on a finite grid.",
+          section: "Projects",handler: () => {
+              window.location.href = "/Personal_Website/projects/wavepacket-dynamics/";
+            },},{
+        id: 'social-cv',
+        title: 'CV',
+        section: 'Socials',
+        handler: () => {
+          window.open("/Personal_Website/assets/pdf/Hasan_Helal_CV.pdf", "_blank");
+        },
+      },{
+        id: 'social-email',
+        title: 'email',
+        section: 'Socials',
+        handler: () => {
+          window.open("mailto:%68%61%73%61%6E%68%34%32%39@%67.%75%63%6C%61.%65%64%75", "_blank");
+        },
+      },{
+        id: 'social-github',
+        title: 'GitHub',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://github.com/HasanHelal429", "_blank");
+        },
+      },{
+        id: 'social-linkedin',
+        title: 'LinkedIn',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://www.linkedin.com/in/hasan-helal-5ba808344", "_blank");
+        },
+      },{
+      id: 'light-theme',
+      title: 'Change theme to light',
+      description: 'Change the theme of the site to Light',
+      section: 'Theme',
+      handler: () => {
+        setThemeSetting("light");
+      },
+    },
+    {
+      id: 'dark-theme',
+      title: 'Change theme to dark',
+      description: 'Change the theme of the site to Dark',
+      section: 'Theme',
+      handler: () => {
+        setThemeSetting("dark");
+      },
+    },
+    {
+      id: 'system-theme',
+      title: 'Use system default theme',
+      description: 'Change the theme of the site to System Default',
+      section: 'Theme',
+      handler: () => {
+        setThemeSetting("system");
+      },
+    },];
+
+</script> <script src="/Personal_Website/assets/al_search/js/shortcut-key.js"></script> </body> </html>
