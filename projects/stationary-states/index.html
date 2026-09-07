@@ -1,0 +1,253 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title> Stationary States of the Schrödinger Equation | Hasan Helal </title> <meta name="author" content="Hasan Helal"> <meta name="description" content="How quantum mechanics actually starts — solving the time-independent Schrödinger equation for the energy eigenstates. The three problems with exact answers, then everything else by putting the Hamiltonian on a grid and diagonalizing — superpositions and revivals, tunnelling splittings, quasi-bound decay, and how a spectrum shifts in a field."> <meta name="keywords" content="jekyll, jekyll-theme, academic-website, portfolio-website, UCLA, Physics, Computational Methods"> <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:; font-src 'self' data: https:; media-src 'self' https:; frame-src 'self' https:; connect-src 'self' https:;"> <style>
+  :root {
+    --max-content-width: 930px;
+  }
+</style> <link rel="stylesheet" href="/Personal_Website/assets/css/tailwind.css?v=50c64c15cbb9fd1ce6056fdb8bcb4b62"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.2.0/css/all.min.css" integrity="sha256-MVopmdyC2tYTiJ8wlktf0uh0v4NgT+vNdyVFepi7Q0c=" crossorigin="anonymous"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.5/css/academicons.min.css" integrity="sha256-SzrCOBJbGVFMahewkgjwnApaV2+av1DwMAA+/QGLyZw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/scholar-icons@1.0.3/css/scholar-icons.css" integrity="sha256-VY3hHVj/hNX3fYG6wtbA6TcKJQl7+FthzGSyIB64klY=" crossorigin="anonymous"> <link defer rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&amp;display=swap"> <link defer rel="stylesheet" href="/Personal_Website/assets/css/jekyll-pygments-themes-github.css?v=591dab5a4e56573bf4ef7fd332894c99" media="" id="highlight_theme_light"> <link rel="shortcut icon" href="data:image/svg+xml,&lt;svg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20100%20100%22&gt;&lt;text%20y=%22.9em%22%20font-size=%2290%22&gt;%E2%9A%9B%EF%B8%8F&lt;/text&gt;&lt;/svg&gt;"> <link rel="stylesheet" href="/Personal_Website/assets/css/main.css?v=3116ba77db9ee1581d05bb3e86fbf7f1"> <link rel="canonical" href="https://hasanhelal429.github.io/Personal_Website/projects/stationary-states/"> <script src="/Personal_Website/assets/js/theme.js?v=5286c3e4c334d0ecb8fc0c40ff4fa7ec"></script> <link defer rel="stylesheet" href="/Personal_Website/assets/css/jekyll-pygments-themes-native.css?v=5847e5ed4a4568527aa6cfab446049ca" media="none" id="highlight_theme_dark"> <script>
+    initTheme();
+  </script> </head> <body class="fixed-top-nav "> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/Personal_Website/"> <span class="font-weight-bold">Hasan</span> Helal </a> <button class="navbar-toggler collapsed navbar-toggler-main" type="button" data-nav-toggle="navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse navbar-collapse-main" id="navbarNav"> <ul class="navbar-nav navbar-menu-list flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/Personal_Website/">about </a> </li> <li class="nav-item active"> <a class="nav-link" href="/Personal_Website/projects/">projects <span class="sr-only">(current)</span> </a> </li> <li class="nav-item "> <a class="nav-link" href="/Personal_Website/repositories/">repositories </a> </li> <li class="nav-item "> <a class="nav-link" href="/Personal_Website/cv/">CV </a> </li> <li class="nav-item dropdown "> <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-nav-dropdown-toggle="true" aria-haspopup="true" aria-expanded="false">submenus </a> <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown"> <a class="dropdown-item " href="/Personal_Website/books/">bookshelf</a> </div> </li> <li class="nav-item"> <button id="search-toggle" type="button" title="Search" aria-label="Open search"> <span class="nav-link">ctrl k <i class="fa-solid fa-magnifying-glass"></i></span> </button> </li> <li class="toggle-container"> <button id="light-toggle" type="button" title="Change theme" aria-label="Change color theme"> <i class="fa-half-sun-moon" id="light-toggle-system"></i> <i class="fa-solid fa-moon" id="light-toggle-dark"></i> <i class="fa-solid fa-sun" id="light-toggle-light"></i> </button> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="container mt-5" role="main"> <div class="post"> <header class="post-header"> <h1 class="post-title">Stationary States of the Schrödinger Equation</h1> <p class="post-description">How quantum mechanics actually starts — solving the time-independent Schrödinger equation for the energy eigenstates. The three problems with exact answers, then everything else by putting the Hamiltonian on a grid and diagonalizing — superpositions and revivals, tunnelling splittings, quasi-bound decay, and how a spectrum shifts in a field.</p> </header> <article> <p>Every quantum-mechanics course opens the same way: find the states of definite energy. Solve</p> \[\hat{H}\,\psi_n(x) = E_n\,\psi_n(x),\] <p>get a ladder of energies $E_n$ and a set of wavefunctions $\psi_n$, and everything else — how any state moves, how a spectrum responds to a perturbation — follows from writing that state as a superposition of these. This project builds that machinery from scratch: the analytic eigenbases for the three exactly-solvable problems, a finite-difference eigensolver for everything else, and time evolution by phase.</p> <h2 id="three-problems-with-exact-answers">Three problems with exact answers</h2> <p>The particle in a box, the harmonic oscillator, and the hydrogen atom are the three potentials whose eigenvalue problem can be solved in closed form — and between them they set every intuition that comes later.</p> <figure> <picture> <source class="responsive-img-srcset" srcset="/Personal_Website/assets/img/projects/stationary-states/three_models-480.webp 480w,/Personal_Website/assets/img/projects/stationary-states/three_models-800.webp 800w,/Personal_Website/assets/img/projects/stationary-states/three_models-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/Personal_Website/assets/img/projects/stationary-states/three_models.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Three exactly-solvable potentials and their energy ladders" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> <div class="caption"> A rising ladder that spreads out (box, E<sub>n</sub> ∝ n²), an even ladder (oscillator, E<sub>n</sub> = ω(n+½)), and a ladder that bunches toward a limit (hydrogen, E<sub>n</sub> = −1/2n²). The wavefunctions gain one node per rung. </div> <p>The box has a subtlety the other two don’t: its levels come in <strong>degenerate groups</strong> once you go to more than one dimension. $E_{n_x n_y} \propto n_x^2 + n_y^2$, so $(2,1)$ and $(1,2)$ have exactly the same energy — the same wavefunction rotated 90°, held together by the square’s symmetry.</p> <figure> <picture> <source class="responsive-img-srcset" srcset="/Personal_Website/assets/img/projects/stationary-states/box_2d_eigenstates-480.webp 480w,/Personal_Website/assets/img/projects/stationary-states/box_2d_eigenstates-800.webp 800w,/Personal_Website/assets/img/projects/stationary-states/box_2d_eigenstates-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/Personal_Website/assets/img/projects/stationary-states/box_2d_eigenstates.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Eigenstates of a two-dimensional box" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> <div class="caption"> The lowest six eigenstates of a 2D box (red/blue = sign of ψ). (2,1) and (1,2) are degenerate at E = 2.5, as are (3,1) and (1,3) at E = 5 — a degeneracy that comes entirely from the geometry. </div> <p>Hydrogen carries the same idea further: its degeneracy is large enough (every $\ell$ and $m$ at a given $n$) that the orbitals you draw are really a choice of basis within a degenerate shell. The angular part is a real spherical harmonic; the radial part carries the nodes.</p> <figure> <picture> <source class="responsive-img-srcset" srcset="/Personal_Website/assets/img/projects/stationary-states/hydrogen_orbitals-480.webp 480w,/Personal_Website/assets/img/projects/stationary-states/hydrogen_orbitals-800.webp 800w,/Personal_Website/assets/img/projects/stationary-states/hydrogen_orbitals-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/Personal_Website/assets/img/projects/stationary-states/hydrogen_orbitals.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Hydrogen orbitals" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> <div class="caption"> |ψ|² in the x–z plane for the 1s, 2p<sub>z</sub> and 3d<sub>z²</sub> orbitals (z vertical), built from the analytic radial functions and real spherical harmonics — the shapes chemistry inherits. </div> <h2 id="any-state-is-a-superposition">Any state is a superposition</h2> <p>The eigenstates are a basis. Write any wavefunction as $\psi(x) = \sum_n c_n\,\phi_n(x)$ once, and its whole future is trivial: every coefficient just turns its own phase at its own rate.</p> <figure> <picture> <source class="responsive-img-srcset" srcset="/Personal_Website/assets/img/projects/stationary-states/superposition_cycle-480.webp 480w,/Personal_Website/assets/img/projects/stationary-states/superposition_cycle-800.webp 800w,/Personal_Website/assets/img/projects/stationary-states/superposition_cycle-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/Personal_Website/assets/img/projects/stationary-states/superposition_cycle.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Evolving a state in an energy eigenbasis" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> <div class="caption"> Project onto the eigenbasis, multiply each coefficient by e<sup>−iE<sub>n</sub>t</sup>, sum back up. No stepping — the dynamics is exact for as long a time as you like. Keeping more modes shrinks the truncation error 1 − Σ|c<sub>n</sub>|² monotonically toward zero. </div> <p>Drop a Gaussian into a box and evolve it and the interference of all those phases produces something startling — the wavepacket shreds into a fine ripple, then <strong>reassembles</strong>. At $t = \tfrac12 T_{\rm rev}$ it reforms at the mirror-image position; at $t = T_{\rm rev}$ it is back exactly where it started. This <em>quantum revival</em> is a pure consequence of the box spectrum being $E_n \propto n^2$: after $T_{\rm rev} = 4mL^2/\pi\hbar$ every phase has come back to a multiple of $2\pi$ at once.</p> <figure> <video src="/Personal_Website/assets/video/projects/stationary-states/wavepacket_in_a_box.webm" class="img-fluid rounded z-depth-1" width="auto" height="auto" autoplay="" controls="" loop="" muted=""></video> <figcaption class="caption">A Gaussian wavepacket in a box, reconstructed from 60 eigenstates. It bounces, disperses into an interference carpet, and revives — first at the reflected position (½ T_rev), then fully (T_rev).</figcaption> </figure> <p>The harmonic oscillator has the opposite personality. Its spectrum is <em>evenly</em> spaced, so a Gaussian whose width exactly matches the oscillator’s natural length stays a Gaussian forever — a <strong>coherent state</strong>, sliding back and forth along the exact classical trajectory $\langle x\rangle(t) = x_0\cos \omega t$ with no spreading at all. Here the numerics reproduce that trajectory to $5\times10^{-9}$, with no free parameters.</p> <figure> <video src="/Personal_Website/assets/video/projects/stationary-states/coherent_state.webm" class="img-fluid rounded z-depth-1" width="auto" height="auto" autoplay="" controls="" loop="" muted=""></video> <figcaption class="caption">A coherent state of the harmonic oscillator: an equal-phase-spacing superposition that rides the classical trajectory (white dot) rigidly. The closest a quantum state comes to a classical particle.</figcaption> </figure> <h3 id="build-your-own-superposition">Build your own superposition</h3> <p>Set the weight of each box eigenstate and watch $|\psi(x,t)|^2$ evolve. A single mode is a standing wave that only turns its phase — its density never moves. Mix in a second and the two beat against each other; mix in several and you get localisation, motion, and (given long enough) revival.</p> <div class="row justify-content-center"> <div class="col-lg-10"> <div id="ss-superpose" style="width:100%;height:340px;"></div> <div id="ss-controls" style="margin-top:0.6rem;font-size:0.9rem;"></div> </div> </div> <script>
+(function () {
+  const JSON_URL = "/Personal_Website/assets/json/projects/stationary-states/box_eigenbasis.json";
+  let B = null, coeffs = [0.7, 0.0, 0.5, 0.0, 0.3, 0.0, 0.0, 0.0];
+  let t = 0, playing = true, raf = null;
+
+  function norm(c) {
+    const s = Math.sqrt(c.reduce((a, v) => a + v * v, 0)) || 1;
+    return c.map(v => v / s);
+  }
+  function density() {
+    const c = norm(coeffs), x = B.x, n = x.length, re = new Float64Array(n), im = new Float64Array(n);
+    for (let m = 0; m < c.length; m++) {
+      if (!c[m]) continue;
+      const ph = -B.E[m] * t, cr = Math.cos(ph), ci = Math.sin(ph), phi = B.phi[m];
+      for (let i = 0; i < n; i++) { re[i] += c[m] * phi[i] * cr; im[i] += c[m] * phi[i] * ci; }
+    }
+    const d = new Float64Array(n);
+    for (let i = 0; i < n; i++) d[i] = re[i] * re[i] + im[i] * im[i];
+    return d;
+  }
+  function redraw() {
+    const d = density();
+    Plotly.react("ss-superpose", [{
+      x: B.x, y: Array.from(d), type: "scatter", mode: "lines", fill: "tozeroy",
+      line: { color: "#58a6ff", width: 1.5 }, fillcolor: "rgba(88,166,255,0.35)",
+      hoverinfo: "skip"
+    }], {
+      paper_bgcolor: "rgba(0,0,0,0)", plot_bgcolor: "rgba(0,0,0,0)",
+      margin: { l: 10, r: 10, t: 10, b: 20 },
+      xaxis: { range: [0, B.L], showticklabels: false, showgrid: false, zeroline: false, fixedrange: true },
+      yaxis: { range: [0, 9], showticklabels: false, showgrid: false, zeroline: false, fixedrange: true },
+      showlegend: false
+    }, { displayModeBar: false, responsive: true });
+  }
+  function tick() { if (playing) { t += 0.004; redraw(); } raf = requestAnimationFrame(tick); }
+
+  function buildControls() {
+    const box = document.getElementById("ss-controls");
+    const presets = {
+      "single mode": [0, 1, 0, 0, 0, 0, 0, 0],
+      "two modes (beating)": [1, 0, 1, 0, 0, 0, 0, 0],
+      "localised bump": [0.71, 0, 0.5, 0, 0.35, 0, 0.22, 0]
+    };
+    let html = '<div style="margin-bottom:.4rem;">';
+    for (const k in presets) html += `<button class="btn btn-sm btn-outline-secondary" data-p="${k}" style="margin-right:.3rem;">${k}</button>`;
+    html += `<button class="btn btn-sm btn-outline-secondary" id="ss-play">pause</button></div>`;
+    for (let m = 0; m < 5; m++)
+      html += `<label style="display:inline-block;width:110px;">c<sub>${m + 1}</sub> = <span id="ss-v${m}">${coeffs[m].toFixed(2)}</span></label>`
+        + `<input type="range" min="0" max="1" step="0.01" value="${coeffs[m]}" data-m="${m}" style="width:150px;vertical-align:middle;margin-right:1rem;">` + (m % 2 ? "<br>" : "");
+    box.innerHTML = html;
+    box.querySelectorAll('input[type=range]').forEach(s => s.addEventListener("input", e => {
+      const m = +e.target.dataset.m; coeffs[m] = +e.target.value;
+      document.getElementById("ss-v" + m).textContent = coeffs[m].toFixed(2);
+    }));
+    box.querySelectorAll('button[data-p]').forEach(b => b.addEventListener("click", () => {
+      coeffs = presets[b.dataset.p].slice(); t = 0;
+      box.querySelectorAll('input[type=range]').forEach(s => {
+        const m = +s.dataset.m; s.value = coeffs[m]; document.getElementById("ss-v" + m).textContent = coeffs[m].toFixed(2);
+      });
+    }));
+    document.getElementById("ss-play").addEventListener("click", e => {
+      playing = !playing; e.target.textContent = playing ? "pause" : "play";
+    });
+  }
+
+  document.addEventListener("readystatechange", () => {
+    if (document.readyState === "complete" && !window.__ssLoaded) {
+      window.__ssLoaded = true;
+      fetch(JSON_URL).then(r => r.json()).then(j => {
+        B = j; buildControls(); redraw(); tick();
+      });
+    }
+  });
+})();
+</script> <h2 id="when-there-is-no-formula-diagonalise-the-grid">When there is no formula: diagonalise the grid</h2> <p>Almost no potential has a closed-form spectrum. The general method is blunt and reliable: sample $x$ on a grid, write the Laplacian as a three-point finite difference, and $\hat{H}$ becomes a sparse matrix whose lowest eigenpairs are exactly what a Lanczos solver is built for.</p> <p>Checked against the three cases that <em>do</em> have formulas, the finite- difference eigenvalues match to the grid’s second-order accuracy and improve by the expected factor of four each time the spacing is halved — and the 2D and 3D degeneracies come out with the right multiplicities. Past that, the same code goes wherever the potential does.</p> <h2 id="a-double-well-and-the-origin-of-the-chemical-bond">A double well, and the origin of the chemical bond</h2> <p>Two wells side by side. If they were infinitely far apart, the ground state would be doubly degenerate — a particle in the left well, or in the right. Bring them close enough that the wavefunction can leak through the barrier between them and that degeneracy splits into a <strong>symmetric / antisymmetric pair</strong> separated by a tiny gap $\Delta E$. The splitting here tracks the semiclassical (WKB) tunnelling estimate to about 1%.</p> <p>That gap is not just a number. A state localised in one well is the equal superposition $(\psi_S - \psi_A)/\sqrt2$ of the two — and because the pair have slightly different energies, that superposition oscillates: the particle tunnels wholesale to the other well and back, with period $2\pi/\Delta E$.</p> <figure> <video src="/Personal_Website/assets/video/projects/stationary-states/double_well_tunneling.webm" class="img-fluid rounded z-depth-1" width="auto" height="auto" autoplay="" controls="" loop="" muted=""></video> <figcaption class="caption">A state prepared entirely in the left well tunnels to the right well and back. The splitting between the symmetric and antisymmetric eigenstates sets the period. This is the covalent bond (the shared, symmetric state sits lower) and the ammonia-inversion clock in one picture.</figcaption> </figure> <p>$\Delta E$ depends <em>exponentially</em> on how far the particle has to tunnel — widen the wells and the splitting collapses by orders of magnitude over a Bohr radius or two:</p> <div id="ss-tunnel" style="width:100%;height:420px;"></div> <script>
+document.addEventListener("readystatechange", () => {
+  if (document.readyState === "complete" && !window.__ssTunnelLoaded) {
+    window.__ssTunnelLoaded = true;
+    fetch("/Personal_Website/assets/json/projects/stationary-states/tunneling_splitting.json")
+      .then(r => r.json())
+      .then(fig => Plotly.newPlot("ss-tunnel", fig.data, fig.layout, { responsive: true }));
+  }
+});
+</script> <div class="caption"> Tunnel-doublet splitting versus the half-separation of the two wells, on a log scale — a straight line, i.e. an exponential. The hover shows the corresponding inversion period. </div> <h2 id="quasi-bound-states-alpha-decay">Quasi-bound states: alpha decay</h2> <p>Not every “bound” state is really bound. Put a well behind a Coulomb barrier — the shape a proton sees inside a nucleus, or an alpha particle trying to leave one — and a state with <em>positive</em> energy can still be trapped, held in by the barrier rather than by a genuine well. It is only <strong>quasi</strong>-bound: it leaks.</p> <figure> <video src="/Personal_Website/assets/video/projects/stationary-states/alpha_decay.webm" class="img-fluid rounded z-depth-1" width="auto" height="auto" autoplay="" controls="" loop="" muted=""></video> <figcaption class="caption">A quasi-bound state (dotted line = its energy) tunnelling out through the Coulomb barrier. The density is shown on a square-root scale so the faint escaping wave is visible; the trapped fraction decays exponentially in time.</figcaption> </figure> <p>The decay is a clean exponential, and its rate is set by the same tunnelling-through-a-barrier factor as the double well — only now the barrier is the Coulomb repulsion, and the “attempt frequency” is how often the trapped particle hits the wall. Because that factor is exponential in the barrier, a small change in the particle’s energy changes the lifetime by enormous factors: the reason nuclear alpha-decay half-lives span from microseconds to longer than the age of the universe (the Geiger–Nuttall law).</p> <h2 id="perturbation-theory-shifting-a-spectrum-without-re-solving">Perturbation theory: shifting a spectrum without re-solving</h2> <p>Once you have the eigenstates, you rarely want to re-diagonalise for a small change. Perturbation theory gives the new energies directly — a first-order shift $\langle n|\hat{H}’|n\rangle$ plus a second-order sum over all the other states, each weighted by $|\langle m|\hat{H}’|n\rangle|^2$ over the energy gap $E_n - E_m$. Tested against exact diagonalisation of the truncated $H_0 + H’$, the first-order error scales as the perturbation strength squared and the second-order error as its cube — and, tellingly, the series visibly <em>diverges</em> once the perturbation is no longer small.</p> <p>The classic case is hydrogen in an electric field. The $n=2$ shell is four-fold degenerate, so first order means diagonalising $\hat{H}’ = Fz$ <em>within</em> that shell. Building the $4\times4$ matrix from the actual wavefunctions and diagonalising gives two states that shift by exactly $\pm 3F$ (atomic units) and two that do not move at all — the shifted states being the combinations $(2s \pm 2p_z)/\sqrt2$. This is a <em>linear</em> Stark effect, unique to hydrogen’s degeneracy; every other atom shifts only quadratically.</p> <div id="ss-stark" style="width:100%;height:460px;"></div> <script>
+document.addEventListener("readystatechange", () => {
+  if (document.readyState === "complete" && !window.__ssStarkLoaded) {
+    window.__ssStarkLoaded = true;
+    fetch("/Personal_Website/assets/json/projects/stationary-states/stark_diagram.json")
+      .then(r => r.json())
+      .then(fig => Plotly.newPlot("ss-stark", fig.data, fig.layout, { responsive: true }));
+  }
+});
+</script> <div class="caption"> The hydrogen n = 1, 2, 3 levels fanning out as the field is turned on. Dotted lines are levels that stay put; solid lines split linearly. The n = 2 slope of ±3F is computed here from the ⟨2s|z|2p_z⟩ matrix element, not assumed. </div> <h2 id="code">Code</h2> <ul> <li> <a href="https://github.com/HasanHelal429/Physics-Simulations" rel="external nofollow noopener" target="_blank"><code class="language-plaintext highlighter-rouge">Physics-Simulations</code></a> — the split-operator propagator and the finite-difference eigensolver (<code class="language-plaintext highlighter-rouge">TDSE_Solver</code>), the analytic box / harmonic / hydrogen eigenbases and perturbation theory (<code class="language-plaintext highlighter-rouge">Perturbation_and_Basis_Methods</code>).</li> </ul> </article> </div> </div> <footer class="fixed-bottom" role="contentinfo"> <div class="container mt-0"> © Copyright 2026 Hasan Helal. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. </div> </footer> <script>
+  window.alFolio = {
+    compatBootstrap: false
+  };
+</script> <script src="/Personal_Website/assets/js/nav-toggle.js?v=141bd79a73ebc0f0b6ea58e440ae79fc"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script> <script defer src="/Personal_Website/assets/js/masonry.js?v=e49affc7bd2646f6acdad1dbe02c2359" type="text/javascript"></script> <script defer src="https://cdn.jsdelivr.net/npm/plotly.js@3.0.1/dist/plotly.min.js" integrity="sha256-oy6Be7Eh6eiQFs5M7oXuPxxm9qbJXEtTpfSI93dW16Q=" crossorigin="anonymous"></script> <script defer src="/Personal_Website/assets/al_charts/js/plotly-setup.js" type="text/javascript"></script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script> <script src="/Personal_Website/assets/al_math/js/mathjax-setup.js"></script> <script src="/Personal_Website/assets/js/tooltips-setup.js?v=fe487e99db6c43751e6e7bdb2d6a0611"></script> <script src="/Personal_Website/assets/js/no_defer.js?v=53b1b1a645525975c963ce8bf8bfefcf"></script> <script defer src="/Personal_Website/assets/js/common.js?v=87baac90f765f2f3362dcf6aaf312a8a"></script> <script defer src="/Personal_Website/assets/js/copy_code.js?v=c8a01c11a92744d44b093fc3bda915df" type="text/javascript"></script> <script defer src="/Personal_Website/assets/js/jupyter_new_tab.js?v=896d254890d9b47f0281f63bfccf0dee"></script> <script async src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script> <script async src="https://badge.dimensions.ai/badge.js"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/Personal_Website/assets/al_img_tools/js/zoom.js"></script> <script defer src="/Personal_Website/assets/js/progress-bar.js?v=499464c5c63ced6cf7ad62509f1e2610" type="text/javascript"></script> <script src="https://cdn.jsdelivr.net/npm/vanilla-back-to-top@7.2.1/dist/vanilla-back-to-top.min.js" integrity="sha256-uMJJ3EoTyfRBoTbR+lrfu1uRQ87RZG8AR3cVNuQVeFg=" crossorigin="anonymous"></script> <script>
+    addBackToTop();
+  </script> <script type="module" src="/Personal_Website/assets/al_search/js/search/ninja-keys.min.js"></script> <ninja-keys hidebreadcrumbs noautoloadmdicons placeholder="Type to start searching"></ninja-keys> <script src="/Personal_Website/assets/al_search/js/search-setup.js"></script> <script>
+// get the ninja-keys element
+const ninja = document.querySelector('ninja-keys');
+
+// add the home and posts menu items
+ninja.data = [{
+    id: "nav-about",
+    title: "about",
+    section: "Navigation",
+    handler: () => {
+      window.location.href = "/Personal_Website/";
+    },
+  },{id: "nav-projects",
+          title: "projects",
+          description: "Computational physics projects, organized by field.",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/Personal_Website/projects/";
+          },
+        },{id: "nav-repositories",
+          title: "repositories",
+          description: "My GitHub profile and a selection of my repositories.",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/Personal_Website/repositories/";
+          },
+        },{id: "nav-cv",
+          title: "CV",
+          description: "My CV — education, research experience, and projects. Click the icon above to download the PDF.",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/Personal_Website/cv/";
+          },
+        },{id: "dropdown-bookshelf",
+              title: "bookshelf",
+              description: "",
+              section: "Dropdown",
+              handler: () => {
+                window.location.href = "/Personal_Website/books/";
+              },
+            },{id: "books-the-godfather",
+          title: 'The Godfather',
+          description: "",
+          section: "Books",handler: () => {
+              window.location.href = "/Personal_Website/books/the_godfather/";
+            },},{id: "news-a-simple-inline-announcement",
+          title: 'A simple inline announcement.',
+          description: "",
+          section: "News",},{id: "news-a-long-announcement-with-details",
+          title: 'A long announcement with details',
+          description: "",
+          section: "News",handler: () => {
+              window.location.href = "/Personal_Website/news/announcement_2/";
+            },},{id: "news-a-simple-inline-announcement-with-markdown-emoji-sparkles-smile",
+          title: 'A simple inline announcement with Markdown emoji! <img class="emoji" title=":sparkles:" alt=":sparkles:" src="https://github.githubassets.com/images/icons/emoji/unicode/2728.png" height="20" width="20"> <img class="emoji" title=":smile:" alt=":smile:" src="https://github.githubassets.com/images/icons/emoji/unicode/1f604.png" height="20" width="20">',
+          description: "",
+          section: "News",},{id: "projects-black-hole-raytracing",
+          title: 'Black-Hole Raytracing',
+          description: "Integrating null geodesics backwards from every pixel — gravitational lensing, black-hole shadows, lensed accretion disks, and the deformed shadow and gyroscope precession of a spinning black hole.",
+          section: "Projects",handler: () => {
+              window.location.href = "/Personal_Website/projects/black-hole-raytracing/";
+            },},{id: "projects-computational-electromagnetics",
+          title: 'Computational Electromagnetics',
+          description: "A 2D finite-difference time-domain (FDTD) solver for the full Maxwell curl equations — CPML absorbing boundaries, a plane-wave source, materials, and near-to-far-field transforms validated against Mie scattering and the Fresnel equations, then pushed into interference, diffraction, and a guided mode.",
+          section: "Projects",handler: () => {
+              window.location.href = "/Personal_Website/projects/computational-electromagnetics/";
+            },},{id: "projects-magnetostatics",
+          title: 'Magnetostatics',
+          description: "The magnetic field of currents and coils, solved two independent ways and checked against theory, then fed into a relativistic Boris pusher — cyclotron orbits, a magnetic mirror and its loss cone, a magnetic cusp, and a toroidal (tokamak-style) coil ring.",
+          section: "Projects",handler: () => {
+              window.location.href = "/Personal_Website/projects/magnetostatics/";
+            },},{id: "projects-radiation-from-moving-charges",
+          title: 'Radiation from Moving Charges',
+          description: "The exact Liénard–Wiechert fields of accelerating point charges on the GPU — dipole radiation, array factors, relativistic beaming, a scattering encounter, and a self-consistent radiative inspiral where charges move under each other's retarded fields.",
+          section: "Projects",handler: () => {
+              window.location.href = "/Personal_Website/projects/radiation-moving-charges/";
+            },},{id: "projects-relativistic-hydrodynamics",
+          title: 'Relativistic Hydrodynamics',
+          description: "A GPU conservative finite-volume solver for relativistic fluid on a fixed black-hole background — validated on flat spacetime, then Schwarzschild accretion, then Kerr orbits and accretion tori, with the near-horizon instability still open.",
+          section: "Projects",handler: () => {
+              window.location.href = "/Personal_Website/projects/relativistic-hydrodynamics/";
+            },},{id: "projects-stationary-states-of-the-schrödinger-equation",
+          title: 'Stationary States of the Schrödinger Equation',
+          description: "How quantum mechanics actually starts — solving the time-independent Schrödinger equation for the energy eigenstates. The three problems with exact answers, then everything else by putting the Hamiltonian on a grid and diagonalizing — superpositions and revivals, tunnelling splittings, quasi-bound decay, and how a spectrum shifts in a field.",
+          section: "Projects",handler: () => {
+              window.location.href = "/Personal_Website/projects/stationary-states/";
+            },},{id: "projects-tidal-disruption-of-a-star",
+          title: 'Tidal Disruption of a Star',
+          description: "A self-gravitating SPH star, built from a Lane-Emden polytrope and validated to equilibrium, torn apart on a close encounter with a black hole — plus the slower, stranger runaway that happens when it orbits instead of plunging.",
+          section: "Projects",handler: () => {
+              window.location.href = "/Personal_Website/projects/tidal-disruption/";
+            },},{
+        id: 'social-cv',
+        title: 'CV',
+        section: 'Socials',
+        handler: () => {
+          window.open("/Personal_Website/assets/pdf/Hasan_Helal_CV.pdf", "_blank");
+        },
+      },{
+        id: 'social-email',
+        title: 'email',
+        section: 'Socials',
+        handler: () => {
+          window.open("mailto:%68%61%73%61%6E%68%34%32%39@%67.%75%63%6C%61.%65%64%75", "_blank");
+        },
+      },{
+        id: 'social-github',
+        title: 'GitHub',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://github.com/HasanHelal429", "_blank");
+        },
+      },{
+        id: 'social-linkedin',
+        title: 'LinkedIn',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://www.linkedin.com/in/hasan-helal-5ba808344", "_blank");
+        },
+      },{
+      id: 'light-theme',
+      title: 'Change theme to light',
+      description: 'Change the theme of the site to Light',
+      section: 'Theme',
+      handler: () => {
+        setThemeSetting("light");
+      },
+    },
+    {
+      id: 'dark-theme',
+      title: 'Change theme to dark',
+      description: 'Change the theme of the site to Dark',
+      section: 'Theme',
+      handler: () => {
+        setThemeSetting("dark");
+      },
+    },
+    {
+      id: 'system-theme',
+      title: 'Use system default theme',
+      description: 'Change the theme of the site to System Default',
+      section: 'Theme',
+      handler: () => {
+        setThemeSetting("system");
+      },
+    },];
+
+</script> <script src="/Personal_Website/assets/al_search/js/shortcut-key.js"></script> </body> </html>
