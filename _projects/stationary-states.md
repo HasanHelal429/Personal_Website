@@ -235,14 +235,14 @@ leave one — and a state with _positive_ energy can still be trapped, held in
 by the barrier rather than by a genuine well. It is only **quasi**-bound: it
 leaks.
 
-{% include video.liquid path="assets/video/projects/stationary-states/alpha_decay.webm" class="img-fluid rounded z-depth-1" autoplay=true loop=true muted=true controls=true caption="A quasi-bound state (dotted line = its energy) tunnelling out through the Coulomb barrier. The density is shown on a square-root scale so the faint escaping wave is visible; the trapped fraction decays exponentially in time." %}
+{% include video.liquid path="assets/video/projects/stationary-states/alpha_decay.webm" class="img-fluid rounded z-depth-1" autoplay=true loop=true muted=true controls=true caption="The same quasi-bound state (dotted line = its energy) behind a thin and a thick Coulomb barrier. The density is on a gentle power scale so the escaping wave shows. The thin-barrier state empties in the time the thick one barely leaks — a modest change in the barrier, a large change in lifetime." %}
 
 The decay is a clean exponential, and its rate is set by the same
 tunnelling-through-a-barrier factor as the double well — only now the barrier
 is the Coulomb repulsion, and the "attempt frequency" is how often the
-trapped particle hits the wall. Because that factor is exponential in the
-barrier, a small change in the particle's energy changes the lifetime by
-enormous factors: the reason nuclear alpha-decay half-lives span from
+trapped particle hits the wall. Because that factor sits in an exponent, a
+modest change in the barrier — or in the particle's energy — changes the
+lifetime by enormous factors: the reason nuclear alpha-decay half-lives span from
 microseconds to longer than the age of the universe (the Geiger–Nuttall
 law).
 
