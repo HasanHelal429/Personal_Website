@@ -6,7 +6,7 @@ subtitle: Undergraduate student/researcher · Department of Physics & Astronomy,
 
 profile:
   align: right
-  image: prof_pic.jpg
+  image: Personal_Pic.jpg
   image_circular: false # crops the image to make it circular
   more_info: >
     <p> 669 2547092, Personal Phone </p>
