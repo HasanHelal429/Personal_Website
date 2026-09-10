@@ -1,36 +1,48 @@
 ---
 layout: page
 title: Black-Hole Raytracing
-description: Integrating null geodesics backwards from every pixel — gravitational lensing, black-hole shadows, lensed accretion disks, and the deformed shadow and gyroscope precession of a spinning black hole.
+description: Integrating light paths through the curved spacetime produced by a black hole.
 img: assets/img/projects/black-hole-raytracing/lensing_grid.png
 importance: 1
 category: General Relativity
 related_publications: false
 ---
 
-Rendering a black hole means giving up straight lines. Light follows null
-geodesics of the curved metric, so a pixel's colour is set not by looking
-along a ray but by integrating one _backwards_ — from the camera, through
-the warped spacetime, until it either escapes to the sky, lands on the
-accretion disk, or crosses the horizon. These are two such raytracers, one
-for the static Schwarzschild black hole and one for the spinning Kerr
-black hole, written in Python.
+Black holes are one of the most fascinating discoveries to come out of 20th century physics,
+however they have always been shrouded in mystery due to the peculiar way they warp spacetime
+in general relativity. This warping causes geodesics, a fancy word for trajectories,
+to be curved in the rest frame of some observer. There are countless images astronomers have taken of
+this lensing effect from galaxies and superclusters. These images can still be hard to understand, since you only get
+a single image plane with all the curvature abstracted away. So to build a better understanding of this phenomenon,
+I built this raytracer, which recreates the path a light ray would take to produce an image.
 
 ## Rendering a black hole backwards
 
-Every pixel gets one ray, launched from the camera in the pixel's
-direction and integrated against the geodesic equation until it resolves.
-The trick that keeps this tractable is symmetry. **Schwarzschild** is
-spherically symmetric, so every photon's orbit stays in a single plane
-through the centre — the full 4D geodesic equation collapses to one
-clean 2D orbit ODE in $u = 1/r$,
+Fully resolving the physics behind emission and tracing countless trajectories just to find the
+photons that end up on a simulated camera sensor is too computationally expensive to be tractable.
+Instead, the method used here is similar to an approach adopted by graphic designers,
+where the ray is launched from the camera, rather than from an emission source.
+Additionally, this solver does not resolve any further graphical information, such as brightness or reflections.
+Instead, the scope of this solver is just tracing out the geodesic and producing a simplistic render
+of the region of spacetime around a black hole.
+
+Here is how it works: every pixel gets one ray, launched from the camera in the pixel's
+direction and integrated against the geodesic equation until it exits our domain,
+where its color is set to black, or it encounters an obstacle,
+where its color is defined by the obstacle.
+The trick that makes the ray integration simple is symmetry. A **Schwarzschild** black hole is chargeless,
+stationary, and irrotational, so the surrounding spacetime is
+spherically symmetric. This means every photon's orbit stays in a single plane
+through the centre, where the full 4D geodesic equation, describing the photon trajectory, collapses to one
+clean 2D ODE in the coordinate $u = 1/r$.
 
 $$
 \frac{d^2 u}{d\varphi^2} = 3 M u^2 - u ,
 $$
 
-integrated per ray and rotated back into 3D. **Kerr** is only
-_axisymmetric_: frame dragging pulls photons out of any fixed plane, so
+This ODE can be integrated per ray and rotated back into 3D. A **Kerr** black hole
+is similar to a **Schwarzschild** black hole, except that it has nonzero angular momentum.
+So it is only _axisymmetric_: frame dragging pulls photons out of any fixed plane, so
 that reduction is gone. Instead each photon carries a third conserved
 quantity — the Carter constant — which separates the radial and polar
 motion into two independent 1D problems once you switch to Mino time. At
